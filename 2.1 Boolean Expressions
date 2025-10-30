@@ -1,0 +1,140 @@
+public class MyProgram
+{
+    public static void main(String[] args)
+    {
+        //boolean expression is anything that reduces to a true or false
+        boolean ans = 5 == 6;
+        //== is used to check if two literals/stack fields are storing
+        //the same information 
+        //== does NOT look in the heap
+        int x = 4;
+        
+        ans = x == 4.0; //Java will let you compare ints to doubles
+        ans = x == 3.9999999999999999; //returns true (problem 1 is that)
+        //if you have more than 16 digits, it will round and can provide
+        //the wrong answer. 
+        x = 435;
+        System.out.println(4.35 * 100); //prints 434.9999999999994
+        ans = x == 4.35 * 100; //prints false because double storing issue
+        //with X.35. Problem 2 is errors in storing some decimal values 
+        //will lead to wrong answers
+        //DON'T use == on doubles. 
+        
+        //EPSILON represents the error introduced in douvles
+        final double EPSILON = 0.00000000001;
+        double dif = Math.abs(x - 4.35 * 100);
+        ans = dif < EPSILON; //returns true
+        //problem with epsilon is that the different could be negative, 
+        //which would affect the output. Thus, you have to use Math.abs()
+        
+        //normal inequalities work: <, >, <=, >= (NO spaces between <= 
+        //and >=)
+        
+        //Check if x is NOT 435
+        // ! means not
+        ans = ! (x == 435); //! will make it not true (comes first)
+        //shortcut
+        ans = x != 435;
+        
+        //how do we check if doubles are not equal?
+        //do NOT use !=, instead use EPSILON (trick question on test)
+        ans = dif >= EPSILON; //Opposite of < or !(dif < EPSILON)
+        
+        //Check if X is between 400 and 500 (both inclusive)
+        // &&, which means "and"
+        //|| mans "or"
+        ans = x >= 400 && x <= 500;
+        
+        //Check if x is outside that range?
+        
+        ans = !(x >= 400 && x <= 500);
+        ans = 400 < x || x > 500;
+        
+        //Example if deMorgans' Laws
+        //You can "distribute" and ! to make it be the opposite
+         
+        //!(a < b || b >= c)
+        // a >= b && b < c
+        
+        ans = ! false && true || false;
+        // ans = true && true || false;
+        // ans = true || false;
+        // ans = true;
+        
+        //&& (and) means both sides need to be true
+        //|| (or) means at least 1 is true
+        
+        ans = false && true || !(false && true);
+        // ans = false || !(false && true);
+        // ans = false || !(false);
+        // ans = false || true;
+        // ans = true;
+        
+        int a = 2, b = 1;
+        ans = ! ((a + b < 5) && ( a * a == b - 1 * 13)) || ( a / b == 2 && a + b == 7);
+        // ans = ! (true && false) || (true && false);
+        // ans = true || false;
+        // ans = true;
+        
+        //short circuit evaluation - if the left side of the compound
+        //determines the answer, the right side is not processed. 
+        ans = a >= 6 && b/a == 1 || !!!!!!!(b >= 5) && a/b == 4;
+        // ans = false && false || !!!!!!!(false) && false;
+        // ans = false || true && false;
+        // ans = false || false;
+        // ans = false;
+        
+        //47% chance for the first person, 29% chance for the second, 
+        //and the rest for the third
+        double rand = Math.random();
+        System.out.println("1st: " + (rand < 0.47));
+        System.out.println("2nd: " + (rand >= 0.47 && rand < 0.76));
+        System.out.println("3rd: " + (rand >= 0.76));
+        
+        String s1 = "short";
+        String s2 = "short";
+        String s3 = new String("short");
+        String s4 = "SHORT".toLowerCase();
+        
+        System.out.println(s1 == s2); //these two are pointing at the 
+        //same eact string in the pool
+        System.out.println(s1 == s3); // all of these are pointing at 
+        //different strings
+        System.out.println(s1 == s4);
+        System.out.println(s2 == s3);
+        System.out.println(s2 == s4);
+        System.out.println(s3 == s4);
+        
+        //Check objects with the equals method.
+        System.out.println(s1.equals(s2));
+        System.out.println(s1.equals(s3));
+        System.out.println(s1.equals(s4));
+        System.out.println(s2.equals(s3));
+        System.out.println(s2.equals(s4));
+        System.out.println(s3.equals(s3));
+        //all true
+        
+        //Beware, not all objects have a useful equals method
+        int[] r = {1, 2, 3];
+        int[] t = {1, 2, 3};
+        System.out.println(r.equals(t));
+        //unfortunately, arrays do not have a useful equals method.
+        //(it also doesn't have a useful toString method)
+        System.out.println(r);
+
+        
+        //System.out.println(ans);
+        //Practice simplifying these using deMorgans' laws:
+        // a) !(x < 3 || y > 2)
+        // x>=3 && x <= 2
+        //b) !(x < 3 && y > 2)
+        // x>=3 || y <=2
+        //c) !(x>2 && y<4)
+        //x<=2 || y>=4
+        //d) !(x!=5 && y!=7)
+        //x==5 || x==7
+        //e) !(((! a) || b) && (!c))
+        //(a && !b) || c
+        
+    }
+}
