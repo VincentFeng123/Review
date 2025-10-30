@@ -1,0 +1,74 @@
+public class MyProgram
+{
+    public static void main(String[] args)
+    {
+        //Write a method that takes in a string and a number and returns
+        //a new string with each character that number of times. 
+        //letterRepeater("Hi", 3) returns "HHHiii"
+        String answer = letterRepeater("super", 5);
+        System.out.println(answer);
+        
+        //Write a method that takes in 2 numbers and prints a 
+        //multiplication table that size
+        
+        printRIT(5);
+        printRITRJ(5);
+        printINRT(5);
+        
+    }
+    public static String letterRepeater(String s, int n){
+        String chr = "";
+        for(int i = 0; i < s.length(); i++){
+            for(int j = 0; j < n; j++){
+                chr += s.substring(i, i+1);
+            }
+        }
+        return chr;
+    }
+    public static void printTable(int length, int width){
+        int maxDigits = (length * width + " ").length();
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < width; j++){
+                int digits = (i * j + "").length();
+                for(; digits < maxDigits; digits++){
+                    System.out.print("  ");
+                }
+                System.out.print(i*j + "");
+            }
+            System.out.println();
+        }
+    }
+    public static void printRIT(int n){
+        for(int r = 0; r < n; r++){
+            for(int c = 0; c < r; c++){
+                System.out.print(". ");
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void printRITRJ(int n){
+        for(int r = 0; r < n; r++){
+            for(int s = n-r; s >= 0; s--){
+                System.out.print("  ");
+            }
+            for(int c = 0; c < r; c++){
+                System.out.print(". ");
+            }
+            System.out.println();
+        }
+    }
+    
+    public static void printINRT(int n){
+        for(int r = 0; r <= n; r++){
+            int tmp = r*2-1;
+            for(int s = n-r; s > 0; s--){
+                System.out.print("  ");
+            }
+            for(int c = 0; c < tmp; c++){
+                System.out.print(". ");
+            }
+            System.out.println();
+        }
+    }
+}
