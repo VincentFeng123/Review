@@ -1,0 +1,150 @@
+import java.util.Scanner;
+
+public class MyProgram
+{
+    private static final Scanner MCSCANFACE = new Scanner(System.in);
+    private static final String QTY = "##";
+    private static final String PRICE = "$$";
+    private static final String END = "~~";
+    public static void main(String[] args)
+    {
+        System.out.println("Welcome");
+        boolean storeOpen = true;
+        String order = "";
+        while (storeOpen){
+            //menu loop
+            boolean helping = true;
+            while (helping){
+                System.out.println("1. Add item \n2. Remove item \n3. Edit qty \n4. Print Order \n5. Pay \n6. Start over");
+                String choice = MCSCANFACE.nextLine(); 
+                
+                if(choice.equals("1"))
+                    order += addItem();
+                else if (choice.equals("2"))
+                    order = deleteItem(order);
+                else if (choice.equals("3"))
+                    order = editQuantity(order);
+                else if (choice.equals("4"))
+                    print(order);
+                else if (choice.equals("5")){
+                    System.out.println("Do you want to pay in 1. cash or 2. card?");
+                    String choice2 = MCSCANFACE.nextLine();
+                    if(choice2.equals("1")){
+                        System.out.println("Give Cash: ");
+                        double cashAmount = Double.parseDouble(MCSCANFACE.nextLine());
+                        if(cashAmount >= print(order)){
+                            double change2 = print(order) - cashAmount;
+                            System.out.println("Here is your change: " + change2);
+                            helping = false;
+                        }
+                        else
+                            System.out.println("Not enough cash");
+                    }else{
+                        System.out.println("Insert Credit Card");
+                        helping = false;
+                    }
+                }
+                if(choice.equals("6"))
+                    helping = false;
+                    
+                printItems(order);
+            
+            }
+            
+           
+        }
+        
+    }
+    public static String addItem(){
+        System.out.println("Item name?");
+        String name = MCSCANFACE.nextLine();
+        System.out.println("How many?");
+        String qty = MCSCANFACE.nextLine();
+        System.out.println("How much?");
+        String price = MCSCANFACE.nextLine();
+        return name + QTY + qty + PRICE + price + END;
+    }
+        
+    public static String editQuantity(String order){
+        printItems(order);
+        System.out.println("Which item would you like to edit");
+        int itemNum = Integer.parseInt(MCSCANFACE.nextLine());
+        System.out.println("What is the new quantity?");
+        double qty = Double.parseDouble(MCSCANFACE.nextLine());
+        //use the item number to loop through the order 
+        String before = order.substring(0, order.indexOf(QTY) + QTY.length());
+        order = order.substring(order.indexOf(QTY) + QTY.length());
+        int qtyNum = 1;
+        while(qtyNum < itemNum){
+            before += order.substring(0, order.indexOf(QTY) + QTY.length());
+            order = order.substring(order.indexOf(QTY) + QTY.length());
+            qtyNum++;
+        }
+        
+        return before + qty + order.substring(order.indexOf(PRICE));
+    }
+    
+    public static String deleteItem(String order){
+        printItems(order);
+        System.out.println("Which item would you like to delete");
+        int itemNum = Integer.parseInt(MCSCANFACE.nextLine());
+        String before = "";
+        
+        for(int i = 1; i < itemNum; i++){
+            int end = order.indexOf(END) + END.length();
+            before += order.substring(0, end);
+            order = order.substring(end);
+            // before += order.substring(0, order.indexOf(END) + END.length());
+            // System.out.println(before);
+            // order = order.substring(order.indexOf(END) + END.length());
+            // System.out.println(order);
+        }
+        int end = order.indexOf(END) + END.length();
+        
+        return before + order.substring(end);
+    }
+    
+    public static double print(String order){
+        System.out.println("#\tNAME\tQUANTITY\tPRICE");
+        double subtotal = printItems(order);
+        System.out.println("\t\t\t\tSUBTOTAL: $" + format(subtotal));
+        double tax = subtotal * 0.0775;
+        System.out.println("\t\t\t\t     TAX: $" + format(tax));
+        double total = subtotal + tax;
+        System.out.println("\t\t\t\t   TOTAL: $" + format(total));
+        return total;
+    }
+    
+    public static double printItems(String order){
+        //while items are left in the order
+        int numItem = 1;
+        double subtotal = 0;
+        while(order.length() > 0){
+            int endIndex = order.indexOf(END);
+            //pull off 1 item to print
+            String item = order.substring(0, endIndex);
+            int qtyIndex= item.indexOf(QTY);
+            int priceIndex = item.indexOf(PRICE);
+            String name = item.substring(0, qtyIndex);
+            double qty = Double.parseDouble(item.substring(qtyIndex + QTY.length(), priceIndex));
+            double price = Double.parseDouble(item.substring(priceIndex + PRICE.length()));
+            subtotal += qty * price;
+            System.out.println(numItem + ") name: " + name + " quantity: " + format(qty) + " price: " + format(price));
+            
+            //loop wih the rest
+            order = order.substring(endIndex + END.length());
+            numItem++;
+        }
+        return subtotal;
+    }
+    
+    public static String format(double num){
+        num *= 100;
+        String numb = "" + Math.round(num);
+            public static String format(double num){
+        num *= 100;
+        String numb = "" + Math.round(num);
+        numb = numb.substring(0, numb.length() - 2) + "." + numb.substring(numb.length() - 2);
+        return numb;
+    }
+}
