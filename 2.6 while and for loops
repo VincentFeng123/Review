@@ -1,0 +1,126 @@
+import java.util.Scanner;
+
+public class MyProgram
+{
+    private static final Scanner SCANNY = new Scanner(System.in);
+    public static void main(String[] args)
+    {
+        //loop to print the numbers 0-9
+        int num = 0; //counter
+        while(num < 10)//condition for iteration is the header
+        {//body of the loop
+            System.out.print(num + " ");
+            num++; //change
+        }
+        //Loops oftne use these 3 C's - counter, condition, and
+        //change
+        System.out.println();
+        
+        //write a loop to print the multiples of 3 from 3 to 30
+        //both inclusive
+        int num2 = 3;
+        while(num2 < 31)
+        {
+            System.out.print(num2 + " ");
+            num2 += 3;
+        }
+        
+        //write a method that takes a string and prints the 
+        //characters with a space between each one. 
+        System.out.println();
+        breakString("joseph akbari");
+        
+        //loops that go until done without a way to predict
+        //them
+        boolean done = false;
+        int sum = 0;
+        System.out.println("Please enter your families' ages and enter a neagtive value to quit");
+        while(!done)
+        {
+            String input = SCANNY.nextLine();
+            int age = Integer.parseInt(input);
+            if (age < 0)
+                //condition check
+                done = true;
+            else
+                sum += age;
+        }
+        System.out.println("Your family's total age is " + sum + ".");
+    
+        
+        
+        //write some code to score for darts. Start at 201 and
+        //subtract the values the user enters. If a value would
+        //put them below 0, don't count and instead remind them
+        //of how much they have left. 
+        boolean playing = true;
+        System.out.println("Your score is 201");
+        int value = 201;
+        while(playing)
+        {   
+            String input = SCANNY.nextLine();
+            int score= Integer.parseInt(input);
+            value -= score;
+            if(value == 0){
+                System.out.println("You win");
+                playing = false;
+            }else if (value - score > 0){
+                value -= score;
+                System.out.println("Your score is " + value);
+            }else{
+                System.out.println("Your score is " + value);
+            }
+            
+        }
+        
+        //for loops just rewrite while loops with the 3c's in
+        //the header
+        for(int i = 0; i < 10; i++) //counter is created here
+        //and lives through all iterations, but dies after the 
+        //loop condition is checked every iteration before the 
+        //body
+        {
+            System.out.println(i);
+        } //changee is after the body each iteration
+        
+        //write a for loop print multiples of 20 starting
+        //at 200 and counting down to 0 (both inclusive)
+        for(int i = 200; i >= 0; i -= 20){
+            System.out.println(i);
+        }
+        
+        //for loop headers can skip any and all of the c's as
+        //long as you leave the 
+        // for(;;) //creates an infinite loop
+        //     System.out.println("weeeeee");
+        int x = 5;
+        for(; x<100; x*=2); //be careful of accidentally putting
+        //; at the end of your condition or iteration headers
+            System.out.println(x);
+            
+        //write a method to take in an int and print it 1 digit
+        //per line from back to front (WITHOUT turning it into
+        //a string)
+        printBackwards(321);
+    } 
+    public static void breakString(String word){
+        int cnt = 0;
+        while(cnt < (int)word.length()){
+            System.out.print(word.substring(cnt, cnt+1) + " ");
+            ++cnt;
+        }
+    }
+    
+    public static void printBackwards(int n){
+        int tmp = n;
+        int cnt = 0;
+        while(tmp > 0){
+            tmp/=10;
+            cnt++;
+        }
+        for(int i = 1; i <= cnt; i ++){
+            int temp = ((int)n % Math.pow(10,i))/(int)Math.pow(10, i-1);
+            System.out.println();
+        }
+    }
+}
