@@ -1,0 +1,153 @@
+public class MyProgram
+{
+    public static void main(String[] args)
+    {
+        //Conditionals (if statements) allow use to direct program
+        //flow based on boolean expressions
+        int x = 33;
+        if (x == 33){
+            System.out.println(x + " is 33");
+            //{} (Curly Braces) are optional (but hightly recommended)
+            //if there will only be 1 command in the f block
+        }
+        //write an if statement to tell if a number is even and another
+        //if statement to tell if a number is odd
+        if (x % 2 == 0){
+            System.out.println("Even");
+        }
+        if (x % 2 != 0){
+            System.out.println("Odd");
+        }
+        
+        if (x % 2 == 0){
+            System.out.println("Even");
+        }
+        else { //else triggers when the if is false
+            System.out.println("Odd");
+        }
+        
+        // } else { alternative style
+        
+        //DO NOT COPY OR DO THIS
+        if(x%2==0) System.out.println("is even"); else System.out.println("is odd");
+        
+        //write an if else in a method that takes in an age and prints
+        //if they are the same age as you or not
+        ageCheck(44);
+        System.out.println(flipCoin());
+        
+        //Randomly picking rock, paper, or scissors
+        double hand = Math.random();
+        //bad version - int division and can print rock and scissors at the same
+        //time
+        if (hand < 1.0/3)
+            System.out.println("rock");
+        if (hand >= 1.0/3 && hand < 2.0/3)
+            System.out.println("paper");
+        else 
+            System.out.println("scissors");
+            
+            
+        if (hand < 1.0/3)
+        {
+            System.out.println("rock");
+        }
+        else
+        {
+            if(hand < 2.0/3)
+            {
+                System.out.println("paper");
+            }
+            else{
+                System.out.println("scissors");
+            }
+        }
+        
+        //Write a method that takes in a GPA and returns the letter equivalent
+        //3.5+ is an A
+        //2.5 - 3.49999999 is a B
+        
+        //Dangling elses are where the if that an else attaches to is not as
+        //clear as it could be 
+        int i = 12;
+        int j = 12;
+        String output;
+        if (i<10)
+        if (j == 10)
+        output = "First block";
+        else
+        output = "Second block";
+        else if (i == 12)
+        if (j == 12)
+        output = "Third block";
+        else
+        output = "Fourth block";
+        else
+        output = "Fifth block";
+        System.out.println(output);
+        //fixed indentation
+        if (i<10)
+            if (j == 10)
+                output = "First block";
+            else
+                output = "Second block";
+        else if (i == 12)
+            if (j == 12)
+                output = "Third block";
+            else
+                output = "Fourth block";
+        else
+            output = "Fifth block";
+        System.out.println(output);
+            
+        
+    }
+    public static void ageCheck(int age){
+        if (age == 16){
+            System.out.println("Same age");
+        }
+        else{
+            System.out.println("Different age");
+        }
+    }
+    
+    public static void letterGrade(double GPA){
+        if (GPA >= 3.5)
+        {
+            System.out.println("A");
+        }
+        else if (GPA >= 2.5){
+            System.out.println("B");
+        }
+        else if (GPA >= 1.5){
+            System.out.println("C");
+        }
+        else if (GPA >= 0.5){
+            System.out.println("D");
+        }
+        else
+        {
+            System.out.println("F");
+        }
+    }
+    //Writing a method that returns an H or T standing for heads or tails
+    //Methods with return types require a return that is not in an if. - the
+    //compiler needs to know what to return if all the iffs are false (even
+    //if they realistically can't be)
+    public static String flipCoin()
+    {
+        int random = (int)(Math.random() * 2);
+        return "HT".substring(random, random+1);
+    }
+    
+    public static String flipCoin2()
+    {
+        int random =(int)(Math.random() * 2);
+        if(random == 1){
+            return "H";
+        }else{
+            return "T";
+        }
+    }
+    
+}
