@@ -1,0 +1,129 @@
+//Task list task list
+//Menu Loop
+//add to string
+
+//Add to do
+                                        //Add deadlines
+//Remove task
+//Print the list
+//Print the checked off list
+                                        //Edit the task
+//Move/reorder task
+//Check off
+import java.util.Scanner;
+
+public class MyProgram
+{
+    private static final Scanner SCAN = new Scanner(System.in);
+    private static final String END = "~~";
+    public static void main(String[] args)
+    {
+        System.out.println("Welcome");
+        boolean active = true;
+        String todo = "";
+        while (active){
+            //menu loop
+            boolean writing = true;
+            while (writing){
+                System.out.println("1. Add item \n2. Remove item \n3. Check Item \n4. Reorder \n5. Print Todo \n6. Start over");
+                String choice = SCAN.nextLine(); 
+                
+                if(choice.equals("1"))
+                    todo += addItem(todo);
+                else if (choice.equals("2"))
+                    todo = deleteItem(todo);
+                else if (choice.equals("3"))
+                    todo = checkItem(todo);
+                else if (choice.equals("4"))
+                    todo = reorder(todo, todo);
+                else if (choice.equals("5"))
+                    printItems(todo);
+                    
+                if(choice.equals("6"))
+                    writing = false;
+                    
+                printItems(todo);
+            
+            }
+        }
+    }
+    public static String addItem(String todo){
+        System.out.println("Add task: ");
+        String task = SCAN.nextLine();
+        return task + END;
+    }
+    
+    public static void printItems(String todo){
+        //while items are left in the list
+        int numItem = 1;
+        while(todo.length() > 0){
+            int endIndex = todo.indexOf(END);
+            //pull off 1 item to print
+            String item = todo.substring(0, endIndex);
+            System.out.println(numItem + ". task: " + item);
+            
+            //loop wih the rest
+            todo = todo.substring(endIndex + END.length());
+            numItem++;
+        }
+    }
+    
+    public static String deleteItem(String todo){
+        printItems(todo);
+        System.out.println("Which item would you like to delete");
+        int itemNum = Integer.parseInt(SCAN.nextLine());
+        String before = "";
+        
+        for(int i = 1; i < itemNum; i++){
+            int end = todo.indexOf(END) + END.length();
+            before += todo.substring(0, end);
+            todo = todo.substring(end);
+        }
+        int end = todo.indexOf(END) + END.length();
+        
+        return before + todo.substring(end);
+    }
+    
+    public static String checkItem(String todo){
+        printItems(todo);
+        System.out.println(todo);
+        System.out.println("Which item would you like to check off: ");
+        int itemNum = Integer.parseInt(SCAN.nextLine());
+        //use the item number to loop through the order 
+        int qtyNum = 1;
+        String before = "";
+        while(qtyNum < itemNum){
+            before += todo.substring(0, todo.indexOf(END) + END.length());
+            todo = todo.substring(todo.indexOf(END) + END.length());
+            qtyNum++;
+        }
+        
+        return before + "✔" + todo;
+    }
+    
+    public static String reorder(String todo, String todo2){
+        printItems(todo);
+        System.out.println("Which item would you like to move: ");
+        int itemNum = Integer.parseInt(SCAN.nextLine());
+        System.out.println("Where woud you like to move it to: ");
+        int changeNum = Integer.parseInt(SCAN.nextLine());
+        int qtyNum = 1;
+        String before = "";
+        while(qtyNum < itemNum){
+            before += todo.substring(0, todo.indexOf(END) + END.length());
+            todo = todo.substring(todo.indexOf(END) + END.length());
+            qtyNum++;
+        }
+        String task = todo.substring(0, todo.indexOf(END) + END.length());
+        todo = todo.substring(todo.indexOf(END) + END.length());
+        String newTask = before + todo;
+        int qtyNum2 = 1;
+        String before2 = "";
+        while(qtyNum2 < changeNum){
+            before2 += newTask.substring(0, newTask.indexOf(END) + END.length());
+            newTask = newTask.substring(newTask.indexOf(END) + END.length());
+            qtyNum2++;
+        }
+        return before2 + task + newTask;
+    }
+}
